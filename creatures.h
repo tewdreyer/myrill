@@ -78,9 +78,9 @@ struct creatureListItem {
 *********************************************/
 struct creature {
     int id;                       /* internal identifier */
-    char name[MAX_LENGTH_NAME],   /* creatures name */
-     race[MAX_LENGTH_NAME],       /* creatures race, a monsters race is its name */
-     profession[MAX_LENGTH_NAME], /* creatures profession, only for pc */
+    char name[MAX_LENGTH_NAME + 1],   /* creatures name */
+     race[MAX_LENGTH_NAME + 1],       /* creatures race, a monsters race is its name */
+     profession[MAX_LENGTH_NAME + 1], /* creatures profession, only for pc */
      symbol;                      /* creatures symbol displayed on the map */
     int level,                    /* creatures level */
      experience,                  /* creatures experience, if creatures is killed attacker gains whole
