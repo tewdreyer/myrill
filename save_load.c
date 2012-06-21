@@ -157,9 +157,7 @@ void read_bestiary(struct creature *monster, char line[80])
 void read_map(char *line, int y)
 {
     int i = 0;
-    char *temp;
     int flag;
-    temp = malloc(3 * sizeof(char));
     for (i = 0; i < MAP_WIDTH; i++) {
         sscanf(line + 2 * i, "%02d", &flag);
         map[y][i].flag = flag;
@@ -199,10 +197,8 @@ void load_map(FILE * stream)
 
 void load_pc(struct gamehandle *myrill, FILE * stream)
 {
-    FILE *load;
     char line[80];
     int done = 0;
-    load = fopen(SAVE_GAME_FILE, "r");
     while (done == 0) {
         fgets(line, sizeof(line), stream);
         if (strstr(line, "-pc start-") != NULL)
