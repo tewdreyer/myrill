@@ -70,7 +70,6 @@ void save_game(struct gamehandle *myrill)
 void read_pc(struct gamehandle *myrill,char line[80])
 {
     char *temp;
-    temp = malloc(20 * sizeof(char));
     temp = strtok(line, ":");
     if (temp != NULL)
         strncpy(myrill->pc->name, temp, LENGTH(myrill->pc->name, char));
@@ -110,13 +109,11 @@ void read_pc(struct gamehandle *myrill,char line[80])
     temp = strtok(NULL, ":");
     if (temp != NULL)
         myrill->pc->position.x = atoi(temp);
-    free(temp);
 }
 
 void read_bestiary(struct creature *monster, char line[80])
 {
     char *temp;
-    temp = malloc(20 * sizeof(char));
     temp = strtok(line, ":");
     if (temp != NULL)
         monster->id = atoi(temp);
@@ -153,7 +150,6 @@ void read_bestiary(struct creature *monster, char line[80])
     temp = strtok(NULL, ":");
     if (temp != NULL)
         monster->position.x = atoi(temp);
-    free(temp);
 }
 
 void read_map(char *line, int y)
