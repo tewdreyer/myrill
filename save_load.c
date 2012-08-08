@@ -110,6 +110,7 @@ void read_pc(struct gamehandle *myrill,char line[80])
     temp = strtok(NULL, ":");
     if (temp != NULL)
         myrill->pc->position.x = atoi(temp);
+    free(temp);
 }
 
 void read_bestiary(struct creature *monster, char line[80])
@@ -152,6 +153,7 @@ void read_bestiary(struct creature *monster, char line[80])
     temp = strtok(NULL, ":");
     if (temp != NULL)
         monster->position.x = atoi(temp);
+    free(temp);
 }
 
 void read_map(char *line, int y)

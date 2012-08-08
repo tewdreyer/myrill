@@ -162,7 +162,6 @@ void quit_game(struct gamehandle *myrill)
     if (myrill->bestiary != NULL){
         free_list(myrill->bestiary->first);
         free_list_handle(myrill->bestiary);
-        myrill->bestiary = NULL;
     }
     delwin(statuswin);
     delwin(mapwin);
@@ -170,7 +169,6 @@ void quit_game(struct gamehandle *myrill)
     delwin(debugwin);
     delwin(stdscr);
     endwin();
-    exit(0);
 }
 
 /***********************************
