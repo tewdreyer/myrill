@@ -19,8 +19,43 @@
 CC       = gcc
 CFLAGS   = -Wall -g -pedantic
 LDFLAGS  = -lcurses -lm
-PROGRAMS = myrill
-OBJ      = bsp.o save_load.o backtracking.o creatures.o mechanics.o output.o myrill.o
+
+DESTDIR=
+
+PREFIX=/usr
+BINDIR=${PREFIX}/bin
+
+MYRILL_BIN = myrill
+
+MYRILL_OBJ = bsp.o save_load.o backtracking.o creatures.o mechanics.o output.o myrill.o
+
+quiet-command = $(if ${V},${1},$(if ${2},@echo ${2} && ${1}, @${1}))
+quiet-install = $(call quiet-command,install -m ${1} ${2} ${3},"INSTALL	${3}")
+quiet-installdir = $(call quiet-command,install -m ${1} -d ${2},"MKDIR	${2}")
+
+all: build
+
+build: ${MYRILL_BIN}
+
+myrill: ${MYRILL_OBJ}
+	$(CC) $^ $(LDFLAGS) -o $@
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $<
+
+clean:
+	$(call quiet-command, rm -f *.o, "RM	*.o")
+	$(call quiet-command, rm -f ${MYRILL_BIN}, "RM	${MYRILL_BIN}")
+
+install: build install-bin
+
+install-bin: $(addprefix ${DESTDIR}${BINDIR}/, ${MYRILL_BIN})
+
+${DESTDIR}${BINDIR}/%: % install-dir-bindir
+	$(call quiet-install, 755, $<, $@)
+
+install-dir-bindir:
+	$(call quiet-installdir, 755, ${DESTDIR}${BINDIR})
 
 # version
 MAJOR = 0
@@ -29,23 +64,6 @@ MINOR = 2
 # package
 PKG_NAME = myrill-$(MAJOR).$(MINOR)
 TARFILE  = $(PKG_NAME).tar
-
-all: $(PROGRAMS)
-
-clean:
-	@rm -fv $(OBJ) $(PROGRAMS)
-
-install:
-	@cp -v myrill $(HOME)/bin
-
-uninstall:
-	@rm -v $(HOME)/bin/myrill
-
-myrill: $(OBJ)
-	$(CC) $(OBJ) $(LDFLAGS) -o myrill
-
-.c.o:
-	$(CC) $(CFLAGS) -c $<
 
 # just for releases
 package:
